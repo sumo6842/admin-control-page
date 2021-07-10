@@ -35,7 +35,9 @@ public class UserService {
         this.crypto = crypto;
     }
 
-    public Page<User> listByPage(int numberPage, String sortField, String sortDir) {
+    public Page<User> listByPage(int numberPage,
+                                 String sortField,
+                                 String sortDir) {
         Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(numberPage - 1, User_Per_Page, sort);
