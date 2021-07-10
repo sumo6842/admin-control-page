@@ -66,83 +66,13 @@
                     table-striped table-responsive-xl">
             <thead class="table-dark">
             <tr>
-                <th>
-                    <a th:if="${sortField != 'id'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        User ID
-                    </a>
-                    <a th:if="${sortField == 'id'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        User ID
-                    </a>
-                    <span th:if="${sortField == 'id'}"
-                          th:class="${reverse == 'asc' ? 'fas fa-sort-up'
-                                                         : 'fas fa-sort-down'}"></span>
-                </th>
+                <th th:replace="fragements :: column_link('id', 'userId')"/>
                 <th>Photos</th>
-                <th>
-                    <a th:if="${sortField != 'email'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        email
-                    </a>
-                    <a th:if="${sortField == 'email'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        email
-                    </a>
-                    <span th:if="${sortField == 'email'}"
-                          th:class="${reverse == 'asc' ? 'fas fa-sort-up'
-                                                         : 'fas fa-sort-down'}"></span>
-                </th>
-                <th>
-                    <a th:if="${sortField != 'firstName'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        first-name
-                    </a>
-                    <a th:if="${sortField == 'firstName'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        first-name
-                    </a>
-                    <span th:if="${sortField == 'firstName'}"
-                          th:class="${reverse == 'asc' ? 'fas fa-sort-up'
-                                                         : 'fas fa-sort-down'}"></span>
-                </th>
-                <th>
-                    <a th:if="${sortField != 'lastName'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        last-name
-                    </a>
-                    <a th:if="${sortField == 'lastName'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        last-name
-                    </a>
-                    <span th:if="${sortField == 'id'}"
-                          th:class="${reverse == 'asc' ? 'fas fa-sort-up'
-                                                         : 'fas fa-sort-down'}"></span>
-                </th>
+                <th th:replace="fragements :: column_link('email', 'E-Mail')"/>
+                <th th:replace="fragements :: column_link('firstName', 'First Name')"/>
+                <th th:replace="fragements :: column_link('lastName', 'Last Name')"/>
                 <th>Roles</th>
-                <th>
-                    <a th:if="${sortField != 'enabled'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        enabled
-                    </a>
-                    <a th:if="${sortField == 'enabled'}" class="text-white"
-                       th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir='
-                            + ${reverse} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        enabled
-                    </a>
-                    <span th:if="${sortField == 'id'}"
-                          th:class="${reverse == 'asc' ? 'fas fa-sort-up'
-                                                         : 'fas fa-sort-down'}"></span>
-                </th>
+                <th th:replace="fragements :: column_link('enabled', 'Enabled')"/>
                 <th>Edit &nbsp; Delete</th>
             </tr>
             </thead>
@@ -191,36 +121,20 @@
         <nav>
             <ul class="pagination justify-content-center">
                 <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disable'}">
-                    <a class="page-link"
-                       th:href="@{'/users/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
-                       + ${keyword != null ? '&keyword=' + keyword : ''}}"
-                    >First</a>
+                    <a th:replace="fragements :: page_link(1, 'First')"></a>
                 </li>
                 <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disable'}">
-                    <a class="page-link"
-                       th:href="@{'/users/page/'+ ${currentPage - 1} +'?sortField=' + ${sortField} + '&sortDir='
-                       + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        Previous
-                    </a>
+                    <a th:replace="fragements :: page_link(${currentPage - 1}, 'Next')"></a>
                 </li>
                 <li th:class="${currentPage != i ? 'page-item' : 'page-item ative'}"
                     th:each="i : ${#numbers.sequence(1, totalPages)}">
-                    <a class="page-link"
-                       th:href="@{'/users/page/'+ ${i} +'?sortField=' + ${sortField} +
-                        '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        [[${i}]]
-                    </a>
+                    <a th:replace="fragements :: page_link(${i}, ${i})"></a>
                 </li>
                 <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disable'}">
-                    <a class="page-link"
-                       th:href="@{'/users/page/'+ ${currentPage + 1} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
-                        + + ${keyword != null ? '&keyword=' + keyword : ''}}">
-                        Next
-                    </a>
+                    <a th:replace="fragements :: page_link(${currentPage + 1}, 'Next')"></a>
                 </li>
                 <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disable'}">
-                    <a class="page-link" th:href="@{'/users/page/'+ ${totalPages} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}
-                     + + ${keyword != null ? '&keyword=' + keyword : ''}}">>Last</a>
+                    <a th:replace="fragements :: page_link(${totalPages}, 'Last')"></a>
                 </li>
             </ul>
         </nav>
