@@ -35,15 +35,16 @@ public class UserController {
     public String listAllUserAction(Model model) {
         List<User> listUsers = service.listAll();
         model.addAttribute("users", listUsers);
-        return  getFirstPage(1, model, "id", "asc");
+        return  getFirstPage(1, model, "id", "asc", null);
     }
 
     @GetMapping("/users/page/{pageNumber}")
     public String getFirstPage(@PathVariable(name = "pageNumber") int pageNumber,
                                Model model,
                                @Param("sortField") String sortField,
-                               @Param("sortDir") String sortDir) {
-        Page<User> page = service.listByPage(pageNumber, sortField, sortDir);
+                               @Param("sortDir") String sortDir,
+                               @Param("keyword") String keyword) {
+        Page<User> page = service.listByPage(pageNumber, sortField, sortDir, keyword);
         List<User> listUsers = page.getContent();
 
         String reverse = sortDir.equals("asc") ? "des" : "asc";

@@ -47,6 +47,20 @@
         <a th:href="@{/users/new}">Create New User</a>
         <p class="text-center text-info" th:if="${message != null}" th:text="${message}"></p>
     </div>
+
+    <div>
+        <form th:action="@{/users/page/1}" class="form-inline m-3">
+            <input type="hidden" name="sortField" th:value="${sortField}">
+            <input type="hidden" name="sortDir" th:value="${sortDir}">
+            filter: &nbsp;
+            <input type="search" name="keyword" th:value="${keyword}" class="form-control" requered>
+            &nbsp;&nbsp;
+            <input type="button" value="search" class="btn btn-primary"/>
+            &nbsp;&nbsp;
+            <input type="button" value="clear" class="btn btn-secondary" onsubmit="clearFilter()">
+        </form>
+    </div>
+
     <div>
         <table class="table table-bordered
                     table-striped table-responsive-xl">
@@ -213,6 +227,12 @@
         <p>Shopping Control Panel - Copyright &copy; Shopping</p>
     </div>
 </section>
+
+<script>
+    function clearFilter() {
+        window.location = "[[@{/users}]]";
+    }
+</script>
 
 </body>
 </html>

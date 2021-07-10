@@ -37,11 +37,12 @@ public class UserService {
 
     public Page<User> listByPage(int numberPage,
                                  String sortField,
-                                 String sortDir) {
+                                 String sortDir,
+                                 String keyword) {
         Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(numberPage - 1, User_Per_Page, sort);
-        return repo.findAll(pageable);
+        return repo.findAll(pageable, keyword);
     }
 
 
