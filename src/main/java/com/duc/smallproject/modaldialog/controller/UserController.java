@@ -35,7 +35,7 @@ public class UserController {
     public String listAllUserAction(Model model) {
         List<User> listUsers = service.listAll();
         model.addAttribute("users", listUsers);
-        return  getFirstPage(1, model, "id", "asc", null);
+        return  getFirstPage(1, model, "id", "asc", "");
     }
 
     @GetMapping("/users/page/{pageNumber}")
@@ -65,6 +65,8 @@ public class UserController {
         model.addAttribute("reverse",reverse);
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
+        model.addAttribute("keyword", keyword);
+
 
         return "manager";
     }
