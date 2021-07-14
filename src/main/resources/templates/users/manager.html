@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragements :: page_head('Home - Shopme Page')"/>
+<body>
+
+<div th:replace="navigation :: menu"></div>
+
+<section class="body">
+    <div>
+        <h1>Manager Users</h1>
+        <a th:href="@{/users/new}" class="fas fa-user-plus fa-2x mr-2 icon-dark"></a>
+        <a th:href="@{/users/exporter/csv}" class="fas fa-file-csv fa-2x mr-2 icon-dark"></a>
+        <a th:href="@{/users/exporter/excel}" class="fas fa-file-excel fa-2x mr-2 icon-dark"></a>
+        <a th:href="@{/users/exporter/pdf}" class="fas fa-file-pdf fa-2x mr-2 icon-dark"></a>
+        <p class="text-center text-info" th:if="${message != null}" th:text="${message}"></p>
+    </div>
+
+    <div>
+        <form th:action="@{/users/page/1}" class="form-inline m-3">
+
+            <div th:if="${param.error}">
+                <p class="text-danger">[[${session.SPRING_LAST_EXCEPTION.message}]]</p>
+            </div>
+
+            <input type="hidden" name="sortField" th:value="${sortField}">
+            <input type="hidden" name="sortDir" th:value="${sortDir}">
+            filter: &nbsp;
+            <input type="search" name="keyword" th:value="${keyword}" class="form-control" requered>
+            &nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary mr-2">
+                <i class="fas fa-search fa-2x"></i>
+            </button>
+            <button type="button" class="btn btn-secondary" onsubmit="clearFilter()">
+                <i class="fas fa-eraser fa-2x"></i>
+            </button>
+        </form>
+    </div>
+    <div class="container-fluid">
+        <div class="full-details">
+            <table class="table table-bordered
+                    table-striped table-responsive-xl">
+                <thead class="table-dark">
+                <tr>
+                    <th class="hideable-column">
+                    <th th:replace="fragements :: column_link('id','userId', 'tag')"/>
+                    </th>
+                    <th>Photos</th>
+                    <th class="hideable-column">
+                    <th th:replace="fragements :: column_link('email','E-Mail', 'tag')"/>
+                    </th>
+                    <th th:replace="fragements :: column_link('firstName','First Name', 'none')"/>
+                    <th th:replace="fragements :: column_link('lastName','Last Name', 'none')"/>
+                    <th>Roles</th>
+                    <th th:replace="fragements :: column_link('enabled','Enabled', 'none')"/>
+                    <th>Edit &nbsp; Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}" class="hideable-column"></td>
+                    <td>
+                    <span th:if="${user.photo == null}"
+                          class="fas fa-portrait fa-3x icon-silver">
+                    </span>
+                        <img th:if="${user.photo != null}"
+                             th:src="@{${user.photosImagePath}}" alt="photo">
+
+                    </td>
+                    <td th:text="${user.email}" class="hideable-column"></td>
+                    <td th:text="${user.firstName}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${user.roles}"></td>
+                    <td>
+                        <a th:if="${user.enabled}"
+                           class="fas fa-check-circle fa-2x icon-green"
+                           th:href="@{'/users/' + ${user.id} +'/enabled/false'}"
+                           title="Disable this user"
+                        ></a>
+                        <a th:if="${user.enabled == false}"
+                           class="fas fa-circle fa-2x icon-silver"
+                           th:href="@{'/users/' + ${user.id} +'/enabled/true'}"
+                           title="Enable this user"></a>
+                    </td>
+                    <td>
+                        <a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/edit/' + ${user.id}}"></a>&nbsp;
+                        <a class="fas fa-trash fa-2x icon-dark" th:href="@{'/users/delete/' + ${user.id}}"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="less-details">
+            <div th:each="user : ${users}" class="row m-1">
+                <div class="col-4">
+                <span th:if="${user.photo == null}"
+                      class="fas fa-portrait fa-3x icon-silver">
+                </span>
+                    <img th:if="${user.photo != null}"
+                         th:src="@{${user.photosImagePath}}" style="max-width: 100px;" alt="photo">
+                </div>
+                <div class="col-8">
+                    <div>
+                        [[${user.fullname}]]
+                    </div>
+                    <div>
+                        [[${user.roles}]]
+                    </div>
+                    <div class="mt-2">
+                        <a th:if="${user.enabled}"
+                           class="fas fa-check-circle fa-2x icon-green"
+                           th:href="@{'/users/' + ${user.id} +'/enabled/false'}"
+                           title="Disable this user"
+                        ></a>
+                        <a th:if="${user.enabled == false}"
+                           class="fas fa-circle fa-2x icon-silver"
+                           th:href="@{'/users/' + ${user.id} +'/enabled/true'}"
+                           title="Enable this user"></a>
+                        &nbsp;
+                        <a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/edit/' + ${user.id}}"></a>&nbsp;
+                        &nbsp;
+                        <a class="fas fa-trash fa-2x icon-dark" th:href="@{'/users/delete/' + ${user.id}}"></a>
+                    </div>
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center m-1" th:if="${totalItems > 0}">
+        <span>Showing users # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
+    </div>
+    <div class="text-center m-1" th:unless="${totalItems > 0}">
+        <span>No Users found</span>
+    </div>
+    <div th:if="${totalPages > 1}">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li th:class="${currentPage > 1 ?'page-item' :'page-item disable'}">
+                    <a th:replace="fragements :: page_link(1,'First')"></a>
+                </li>
+                <li th:class="${currentPage > 1 ?'page-item' :'page-item disable'}">
+                    <a th:replace="fragements :: page_link(${currentPage - 1},'Next')"></a>
+                </li>
+                <li th:class="${currentPage != i ?'page-item' :'page-item ative'}"
+                    th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:replace="fragements :: page_link(${i}, ${i})"></a>
+                </li>
+                <li th:class="${currentPage < totalPages ?'page-item' :'page-item disable'}">
+                    <a th:replace="fragements :: page_link(${currentPage + 1},'Next')"></a>
+                </li>
+                <li th:class="${currentPage < totalPages ?'page-item' :'page-item disable'}">
+                    <a th:replace="fragements :: page_link(${totalPages},'Last')"></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<div th:replace="navigation :: footer"></div>
+
+</body>
+</html>

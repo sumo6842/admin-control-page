@@ -22,6 +22,10 @@ class UserServiceTest {
                 this.service.listByPage(1, "id", "asc", "maria");
         users.getContent().forEach(System.out::println);
     }
+    @Test
+    void listALl() {
+        this.service.listAll().forEach(System.out::println);
+    }
 
     @Test
     public void filterTest() {

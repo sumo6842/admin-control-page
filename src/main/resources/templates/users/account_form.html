@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragements :: page_head('Your Account Deatils')"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="navigation :: menu">
+    </div>
+    <form th:action="@{/account/update}" method="post"
+          style="max-width: 800px; margin: 0 auto;"
+          enctype="multipart/form-data" th:object="${user}"
+          onsubmit="return checkEmailUnique(this);">
+        <div class="text-center">
+            <h2>Your Account Details</h2>
+        </div>
+        <p class="text-center text-info" th:if="${message != null}" th:text="${message}"></p>
+        <input type="hidden" th:field="*{id}"/>
+        <div class="border border-secondary rounded p-3">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">E-mail:</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" th:field="*{email}" readonly="readonly"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">First Name:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" th:field="*{firstName}" required minlength="2"
+                           maxlength="45"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Last Name:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" th:field="*{lastName}" required minlength="2"
+                           maxlength="45"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Password:</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" th:field="*{password}"
+                           maxlength="20" minlength="8"
+                    placeholder="Leave blank if dont want to change password"
+                    oninput="chekPasswordMatch(document.getElementById('confirm_password'))">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Confirm Password:</label>
+                <div class="col-sm-8">
+                    <input type="password" id="confirm_password" class="form-control"
+                           oninput="chekPasswordMatch(this)">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Assigned Roles:</label>
+                <div class="col-sm-8">
+                   <span><b>[[${user.roles}]]</b></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Enabled:</label>
+                <div class="col-sm-8">
+                    <input type="checkbox" th:field="*{enabled}"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Photos:</label>
+                <div class="col-sm-8">
+                    <input type="hidden" th:field="*{photo}"/>
+                    <input type="file" id="fileImage" name="image" accept="image/png, image/jpeg"
+                           class="mb-2"/>
+                    <img id="thumbnail" alt="Photos preview"
+                         th:src="@{${user.photosImagePath}}"
+                         class="img-fluid"/>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <input type="submit" value="Save" class="btn btn-primary m-3"/>
+                <input type="button" value="Cancel" class="btn btn-secondary" id="buttonCancel"/>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+        moduleURL = "[[@{/users}]]";
+
+        function chekPasswordMatch(confirm_password) {
+            if(confirm_password.value !== $("#password").val()) {
+                confirm_password.setCustomValidity("Password doesnt match!");
+            } else {
+                confirm_password.setCustomValidity("");
+            }
+        }
+
+    </script>
+    <script th:src="@{/js/common_form.js}"></script>
+</div>
+</body>
+</html>

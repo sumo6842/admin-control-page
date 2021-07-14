@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,6 +36,10 @@ public class UserService {
         this.crypto = crypto;
     }
 
+    public User getByEmail(String email) {
+        return repo.getUserByEmail(email);
+    }
+
     public Page<User> listByPage(int numberPage,
                                  String sortField,
                                  String sortDir,
@@ -47,7 +52,8 @@ public class UserService {
 
 
     public List<User> listAll() {
-        return (List<User>) (this.repo.findAll());
+        Sort sortByFirstName = Sort.by("firstName").ascending();
+        return (List<User>) (this.repo.findAll(sortByFirstName));
     }
 
     public List<Role> listRole() {
@@ -67,6 +73,20 @@ public class UserService {
             encodePassword(user);
         }
         return this.repo.save(user);
+    }
+
+    public User updateAccount(User userInform) {
+        var user = repo.findById(userInform.getId()).get();
+        if(!userInform.getPassword().isEmpty()) {
+            user.setPassword(userInform.getPassword());
+            encodePassword(user);
+        }
+        if (userInform.getPhoto() != null) {
+            user.setPhoto(userInform.getPhoto());
+        }
+        user.setFirstName(userInform.getFirstName());
+        user.setLastName(userInform.getLastName());
+        return repo.save(user);
     }
 
     private void encodePassword(User user) {

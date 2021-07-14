@@ -42,4 +42,9 @@ public class User {
         return "/photo-user/" + this.id + "/" + this.photo;
     }
 
+    @Transient
+    public String getFullname() {
+        return firstName + " " + lastName;
+    }
+
 }

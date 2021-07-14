@@ -1,10 +1,13 @@
-package com.duc.smallproject.modaldialog.controller;
+package com.duc.smallproject.modaldialog.controller.usercontroller;
 
 import com.duc.smallproject.modaldialog.model.Role;
 import com.duc.smallproject.modaldialog.model.User;
 import com.duc.smallproject.modaldialog.service.UserService;
 import com.duc.smallproject.modaldialog.user.UserNotFoundException;
 import com.duc.smallproject.modaldialog.util.FileUploadUtils;
+import com.duc.smallproject.modaldialog.util.UserCsvExporter;
+import com.duc.smallproject.modaldialog.util.UserExcelExporter;
+import com.duc.smallproject.modaldialog.util.UserPdfExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -68,7 +72,7 @@ public class UserController {
         model.addAttribute("keyword", keyword);
 
 
-        return "manager";
+        return "/users/manager";
     }
 
     @GetMapping("/users/new")
@@ -80,7 +84,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("roles", roles);
         model.addAttribute("pageTitle", "Create New User");
-        return "user_form";
+        return "/users/user_form";
     }
 
 
@@ -105,7 +109,6 @@ public class UserController {
             if (user.getPhoto().isEmpty()) user.setPhoto(null);
             service.save(user);
         }
-        System.out.println(user);
         attributes.addFlashAttribute("message",
                 "The user has been saved successfully😀");
         return getRedirectURLtoAffectedUser(user);
@@ -126,7 +129,7 @@ public class UserController {
             model.addAttribute("user", user);
             model.addAttribute("pageTitle", "Edit User (Id: " + id + ")");
             model.addAttribute("roles", listRoles);
-            return "user_form";
+            return "/users/user_form";
         } catch (UserNotFoundException ex) {
             redirectAttributes.addFlashAttribute("message", ex.getMessage());
             return "redirect:/users";
@@ -155,6 +158,28 @@ public class UserController {
         String message = "The user Id " + id + " has been " + enable;
         attributes.addFlashAttribute("message", message);
         return "redirect:/users";
+    }
+
+    @GetMapping("/users/exporter/csv")
+    public void exporterCsv(HttpServletResponse response)
+            throws IOException {
+        List<User> users = service.listAll();
+        UserCsvExporter exporter = new UserCsvExporter();
+        exporter.export(users, response);
+    }
+    @GetMapping("/users/exporter/excel")
+    public void exporterExcel(HttpServletResponse response)
+            throws IOException {
+        List<User> users = service.listAll();
+        UserExcelExporter exporter = new UserExcelExporter();
+        exporter.export(users, response);
+    }
+    @GetMapping("/users/exporter/pdf")
+    public void exporterPdf(HttpServletResponse response)
+            throws IOException {
+        List<User> users = service.listAll();
+        UserPdfExporter exporter = new UserPdfExporter();
+        exporter.export(users, response);
     }
 
 }
