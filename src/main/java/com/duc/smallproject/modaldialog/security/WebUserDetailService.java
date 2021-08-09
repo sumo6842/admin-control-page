@@ -15,7 +15,8 @@ public class WebUserDetailService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
         User userByEmail = repo.getUserByEmail(username);
         if (userByEmail != null) {
             return new WebUserDetail(userByEmail);

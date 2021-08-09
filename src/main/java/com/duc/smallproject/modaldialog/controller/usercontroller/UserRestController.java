@@ -4,13 +4,14 @@ import com.duc.smallproject.modaldialog.model.User;
 import com.duc.smallproject.modaldialog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @RestController
+@RequestMapping("/api")
 public class UserRestController {
     private final UserService userService;
 
@@ -29,5 +30,18 @@ public class UserRestController {
     public List<User> getAll() {
         return this.userService.listAll();
     }
+
+    /**
+     * todo Test Swagger:
+     * @param id
+     * @return
+     */
+
+//    private ConcurrentMap<Integer, User> users = new ConcurrentHashMap<>();
+//    @GetMapping("/user/{id}")
+//    public User getUser(@PathVariable Integer id) {
+//        return null;
+//    }
+
 
 }

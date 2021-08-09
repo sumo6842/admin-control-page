@@ -1,0 +1,66 @@
+2021-08-09 14:25:38.171  INFO 152 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-08-09 14:25:38.240  INFO 152 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 62 ms. Found 3 JPA repository interfaces.
+2021-08-09 14:25:38.789  INFO 152 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-08-09 14:25:38.789  INFO 152 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-09 14:25:38.789  INFO 152 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.48]
+2021-08-09 14:25:38.958  INFO 152 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-09 14:25:38.958  INFO 152 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1728 ms
+2021-08-09 14:25:39.121  INFO 152 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-08-09 14:25:39.159  INFO 152 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-08-09 14:25:39.275  INFO 152 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-08-09 14:25:39.359  INFO 152 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-08-09 14:25:39.622  INFO 152 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-08-09 14:25:39.645  INFO 152 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-08-09 14:25:40.822  INFO 152 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-08-09 14:25:40.829  INFO 152 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-08-09 14:25:41.261  WARN 152 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-08-09 14:25:41.701  INFO 152 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/image/**'] with []
+2021-08-09 14:25:41.701  INFO 152 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/js/**'] with []
+2021-08-09 14:25:41.701  INFO 152 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/webjars/**'] with []
+2021-08-09 14:25:41.701  INFO 152 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/images/**'] with []
+2021-08-09 14:25:41.701  INFO 152 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/css/**'] with []
+2021-08-09 14:25:41.701  INFO 152 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/fontawesome/**'] with []
+2021-08-09 14:25:41.701  INFO 152 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/webfonts/**'] with []
+2021-08-09 14:25:41.731  INFO 152 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3450a700, org.springframework.security.web.context.SecurityContextPersistenceFilter@6ee66d69, org.springframework.security.web.header.HeaderWriterFilter@68715558, org.springframework.security.web.csrf.CsrfFilter@167c7c68, org.springframework.security.web.authentication.logout.LogoutFilter@2b158015, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3009997a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4c75b2bf, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7d314e46, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@5186bc01, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1391959d, org.springframework.security.web.session.SessionManagementFilter@1bd1227, org.springframework.security.web.access.ExceptionTranslationFilter@2eada173, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6854374b]
+2021-08-09 14:25:41.847  INFO 152 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-09 14:25:41.863  INFO 152 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-08-09 14:25:42.596  INFO 152 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-08-09 14:25:42.767  INFO 152 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-09 14:25:42.767  INFO 152 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-09 14:25:42.767  INFO 152 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2021-08-09 14:25:42.965  INFO 152 --- [restartedMain] c.d.s.m.ModalDialogApplication           : Started ModalDialogApplication in 6.316 seconds (JVM running for 7.439)
+2021-08-09 14:32:12.616  INFO 3168 --- [restartedMain] c.d.s.m.ModalDialogApplication           : Starting ModalDialogApplication using Java 14.0.1 on Minhduc13 with PID 3168 (D:\N_Java_spring\github\admin-control-page\target\classes started by DELL in D:\N_Java_spring\github\admin-control-page)
+2021-08-09 14:32:12.616  INFO 3168 --- [restartedMain] c.d.s.m.ModalDialogApplication           : No active profile set, falling back to default profiles: default
+2021-08-09 14:32:12.681  INFO 3168 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-08-09 14:32:12.681  INFO 3168 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-08-09 14:32:13.843  INFO 3168 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-08-09 14:32:13.889  INFO 3168 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 3 JPA repository interfaces.
+2021-08-09 14:32:14.422  INFO 3168 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-08-09 14:32:14.438  INFO 3168 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-09 14:32:14.438  INFO 3168 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.48]
+2021-08-09 14:32:14.576  INFO 3168 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-09 14:32:14.576  INFO 3168 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1895 ms
+2021-08-09 14:32:14.745  INFO 3168 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-08-09 14:32:14.776  INFO 3168 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-08-09 14:32:14.861  INFO 3168 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-08-09 14:32:14.945  INFO 3168 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-08-09 14:32:15.193  INFO 3168 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-08-09 14:32:15.209  INFO 3168 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-08-09 14:32:16.064  INFO 3168 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-08-09 14:32:16.064  INFO 3168 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-08-09 14:32:16.497  WARN 3168 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-08-09 14:32:16.867  INFO 3168 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/image/**'] with []
+2021-08-09 14:32:16.882  INFO 3168 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/js/**'] with []
+2021-08-09 14:32:16.882  INFO 3168 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/webjars/**'] with []
+2021-08-09 14:32:16.882  INFO 3168 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/images/**'] with []
+2021-08-09 14:32:16.882  INFO 3168 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/css/**'] with []
+2021-08-09 14:32:16.882  INFO 3168 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/fontawesome/**'] with []
+2021-08-09 14:32:16.882  INFO 3168 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/webfonts/**'] with []
+2021-08-09 14:32:16.898  INFO 3168 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@13f95587, org.springframework.security.web.context.SecurityContextPersistenceFilter@28419b44, org.springframework.security.web.header.HeaderWriterFilter@2e857c0c, org.springframework.security.web.csrf.CsrfFilter@d59f859, org.springframework.security.web.authentication.logout.LogoutFilter@10f3aa2f, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@b827828, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2ba5d2ef, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@44476544, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@2a31cdc2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3a93cd00, org.springframework.security.web.session.SessionManagementFilter@3dada47, org.springframework.security.web.access.ExceptionTranslationFilter@1d837218, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2be879d4]
+2021-08-09 14:32:16.998  INFO 3168 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-09 14:32:17.014  INFO 3168 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-08-09 14:32:17.684  INFO 3168 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-08-09 14:32:18.001  INFO 3168 --- [restartedMain] c.d.s.m.ModalDialogApplication           : Started ModalDialogApplication in 5.849 seconds (JVM running for 6.959)
+2021-08-09 14:32:18.032  INFO 3168 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-09 14:32:18.032  INFO 3168 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-09 14:32:18.048  INFO 3168 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 16 ms

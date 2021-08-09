@@ -41,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/users/**")
-                .hasAuthority("Admin")
+                .antMatchers("/users/**").hasAuthority("Admin")
+                .antMatchers("/categories").hasAnyAuthority("Admin", "Editor")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -52,10 +52,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().and()
                 .logout()
                 .permitAll()
-        .and()
+                .and()
                 .rememberMe()
-                .key("abcdefghijklmnoyxz_123456789")
-                .tokenValiditySeconds(7 * 24 * 60 * 60);
+                    .key("abcdefghijklmnoyxz_123456789")
+                    .tokenValiditySeconds(7 * 24 * 60 * 60);
     }
 
     @Override
@@ -72,10 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 /**
  * hasRole: todo insert ROLE_ before role name automatically
  * & hasAuthority: todo no insertion - user the given role name as it is
- *
+ * <p>
  * Thymeleaf:
  * <div sec:authorise="isAuthenticated()"></div> //todo process this block if user is authentication
  * <div sec:authorize="hasAuthority('Admin') //todo process this block if user  has role admin
- *
- *
  */

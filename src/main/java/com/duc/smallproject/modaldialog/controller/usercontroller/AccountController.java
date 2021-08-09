@@ -43,12 +43,8 @@ public class AccountController {
             User save = service.updateAccount(user);
             String uploadDir = "photo-user/" + save.getId();
 
-            try {
-                FileUploadUtils.clearDir(uploadDir);
-                FileUploadUtils.saveFile(uploadDir, photo, image);
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
+            FileUploadUtils.clearDir(uploadDir);
+            FileUploadUtils.saveFile(uploadDir, photo, image);
 
         } else {
             if (user.getPhoto().isEmpty()) user.setPhoto(null);

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head th:replace="fragements :: page_head('Categories')"/>
+<body>
+<section class="header">
+    <div th:replace="navigation :: menu"></div>
+</section>
+
+<section class="body">
+    <div class="container-fluid">
+        <div>
+            <h2>Manage Categories</h2>
+        </div>
+        <div th:if="${message != null}" class="text-info text-center alert-success">
+            [[${message}]]
+        </div>
+        <div>
+            <!--        <i class="fas fa-file-plus"></i>-->
+            <a th:href="@{/categories/new}" class="fas fa-folder-plus fa-2x icon-silver mr-2"></a>
+            <a th:href="@{/categories/exporterCsv}" class="fas fa-file-csv fa-2x icon-silver mr-2"></a>
+        </div>
+
+        <div>
+            <form th:action="@{/category/page/1}" class="form-inline m-3">
+                Filter:
+                &nbsp;
+                <input type="search" class="form-control" name="keyword">
+                &nbsp;&nbsp;
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+                &nbsp;&nbsp;
+                <button class="btn btn-secondary" onsubmit="clearFilter()">
+                    <i class="fas fas fa-eraser"></i>
+                </button>
+            </form>
+        </div>
+
+        <div>
+            <table class="table table-bordered table-striped table-dark table-responsive-xl">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Category Imaged</th>
+                    <th>Category Name</th>
+                    <th>Alias</th>
+                    <th>Enable</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <div th:if="${categories != null}">
+                    <tr th:each="category : ${categories}">
+                        <td>[[${category.id}]]</td>
+                        <td>
+                            <img th:src="@{${category.imagePath}}"
+                                 style="width: 100px" class="img-fluid"
+                                 alt="">
+                        </td>
+                        <td>[[${category.name}]]</td>
+                        <td>[[${category.alias}]]</td>
+                        <td>
+                            <a th:if="${category.enabled}" th:href="@{/#}">
+                                <i class="fas fa-check-circle fa-2x icon-green"></i>
+                            </a>
+                            <a th:if="${!category.enabled}" th:href="@{/#}">
+                                <i class="fas fa-circle fa-2x icon-silver"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/categories/edit/' + ${category.id}}" class="fa fa-edit fa-2x icon-green">
+                            </a>
+                            &nbsp;&nbsp;
+                            <a th:href="@{'/categories/delete/'  + ${category.id}}" class="fas fa-trash fa-2x icon-silver">
+                            </a>
+                        </td>
+                    </tr>
+                </div>
+
+                <div th:if="${categories == null}" class="text-center">
+                    <tr>Has no any Category</tr>
+                </div>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+
+<div th:replace=" fragements :: footer">
+</div>
+</body>
+</html>

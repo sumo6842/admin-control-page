@@ -8,6 +8,7 @@ import com.duc.smallproject.modaldialog.util.FileUploadUtils;
 import com.duc.smallproject.modaldialog.util.UserCsvExporter;
 import com.duc.smallproject.modaldialog.util.UserExcelExporter;
 import com.duc.smallproject.modaldialog.util.UserPdfExporter;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String listAllUserAction(Model model) {
+    public String listAllUserAction(@NonNull Model model) {
         List<User> listUsers = service.listAll();
         model.addAttribute("users", listUsers);
         return  getFirstPage(1, model, "id", "asc", "");
@@ -71,12 +72,11 @@ public class UserController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("keyword", keyword);
 
-
         return "/users/manager";
     }
 
     @GetMapping("/users/new")
-    public String newUserPage(Model model) {
+    public String newUserPage(@NonNull Model model) {
         List<Role> roles = service.listRole();
 
         User user = new User();
@@ -91,19 +91,15 @@ public class UserController {
     @PostMapping("users/save")
     public String saveUserAction(User user,
                                  RedirectAttributes attributes,
-                                 @RequestParam("image") MultipartFile image) {
+                                 @RequestParam("image") @NonNull MultipartFile image) {
         if (!image.isEmpty()) {
             String photo = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
             user.setPhoto(photo);
             User save = service.save(user);
             String uploadDir = "photo-user/" + save.getId();
 
-            try {
-                FileUploadUtils.clearDir(uploadDir);
-                FileUploadUtils.saveFile(uploadDir, photo, image);
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
+            FileUploadUtils.clearDir(uploadDir);
+            FileUploadUtils.saveFile(uploadDir, photo, image);
 
         } else {
             if (user.getPhoto().isEmpty()) user.setPhoto(null);
@@ -114,13 +110,13 @@ public class UserController {
         return getRedirectURLtoAffectedUser(user);
     }
 
-    private String getRedirectURLtoAffectedUser(User user) {
+    private String getRedirectURLtoAffectedUser(@NonNull User user) {
         String firstPartOfEmail = user.getEmail().split("@")[0];
         return "redirect:/users/page/1?sortField=id&sortDir=as&keyword=" + firstPartOfEmail;
     }
 
     @GetMapping("/users/edit/{id}")
-    public String editUserAction(@PathVariable(name = "id") Long id,
+    public String editUserAction(@PathVariable(name = "id") @NonNull Long id,
                                  Model model,
                                  RedirectAttributes redirectAttributes) {
         try {
@@ -170,6 +166,7 @@ public class UserController {
     @GetMapping("/users/exporter/excel")
     public void exporterExcel(HttpServletResponse response)
             throws IOException {
+//        response.setContentType("application/octect-stream");
         List<User> users = service.listAll();
         UserExcelExporter exporter = new UserExcelExporter();
         exporter.export(users, response);

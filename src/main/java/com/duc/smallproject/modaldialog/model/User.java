@@ -4,6 +4,7 @@ package com.duc.smallproject.modaldialog.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 
 @Data
@@ -35,6 +36,20 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private List<Role> roles;
+
+    public User() {
+    }
+
+    public User(Long id, String email,
+                boolean enabled, String firstName,
+                String lastName, List<Role> roles) {
+        this.id = id;
+        this.email = email;
+        this.enabled = enabled;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roles = roles;
+    }
 
     @Transient
     public String getPhotosImagePath() {
