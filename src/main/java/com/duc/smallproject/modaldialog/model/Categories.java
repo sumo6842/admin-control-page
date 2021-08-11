@@ -1,10 +1,7 @@
 package com.duc.smallproject.modaldialog.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Entity
@@ -48,6 +45,12 @@ public class Categories {
         this.parent = parent;
     }
 
+    public Categories(Integer id, String name, String alias) {
+        this.id = id;
+        this.name = name;
+        this.alias = alias;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -71,6 +74,9 @@ public class Categories {
     public void setAlias(String alias) {
         this.alias = alias;
     }
+
+    @Transient
+    public boolean hasChildren;
 
     @Transient
     public String getImagePath() {
@@ -112,6 +118,14 @@ public class Categories {
         this.children = children;
     }
 
+    public boolean isHasChildren() {
+        return hasChildren;
+    }
+
+    public void setHasChildren(boolean hasChildren) {
+        this.hasChildren = hasChildren;
+    }
+
     public static Categories copyIdAndName(Categories categories) {
         Categories copyCategory = new Categories();
         copyCategory.setId(categories.id);
@@ -127,20 +141,14 @@ public class Categories {
     }
 
     public static Categories copyFull(Categories category) {
-//        return Optional.of(new Categories()).stream()
-//                .peek(c -> c.setId(categories.id))
-//                .peek(c -> c.setName(categories.name))
-//                .peek(c -> c.setImage(categories.image))
-//                .peek(c -> c.setAlias(categories.alias))
-//                .peek(c -> c.setEnabled(categories.enabled))
-//                .findAny().orElseThrow(IllegalArgumentException::new);
+
         Categories copyCategory = new Categories();
         copyCategory.setId(category.getId());
         copyCategory.setName(category.getName());
         copyCategory.setImage(category.image);
         copyCategory.setAlias(category.getAlias());
         copyCategory.setEnabled(category.isEnabled());
-
+        copyCategory.setHasChildren(category.getChildren().size() > 0);
         return copyCategory;
     }
     public static Categories copyFull(Categories cate, String name) {

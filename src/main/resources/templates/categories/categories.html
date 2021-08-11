@@ -41,9 +41,19 @@
                 <tr>
                     <th>Id</th>
                     <th>Category Imaged</th>
-                    <th>Category Name</th>
+                    <th>
+                        <a class="text-white" th:href="@{'/categories?sortDir=' + ${reverse}}">
+                            Category Name
+                            <span
+                                  th:value="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+<!--                                    th:if="${sortField == fieldName}"-->
+                        </a>
+                    </th>
                     <th>Alias</th>
-                    <th>Enable</th>
+                    <th>
+                            Enable
+
+                    </th>
                     <th></th>
                 </tr>
                 </thead>
@@ -59,19 +69,23 @@
                         <td>[[${category.name}]]</td>
                         <td>[[${category.alias}]]</td>
                         <td>
-                            <a th:if="${category.enabled}" th:href="@{/#}">
+                            <a th:if="${category.enabled}" th:href="@{'/categories/' + ${category.id} + '/enabled'}">
                                 <i class="fas fa-check-circle fa-2x icon-green"></i>
                             </a>
-                            <a th:if="${!category.enabled}" th:href="@{/#}">
+                            <a th:if="${!category.enabled}" th:href="@{'/categories/' + ${category.id} + '/enabled'}">
                                 <i class="fas fa-circle fa-2x icon-silver"></i>
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{'/categories/edit/' + ${category.id}}" class="fa fa-edit fa-2x icon-green">
-                            </a>
-                            &nbsp;&nbsp;
-                            <a th:href="@{'/categories/delete/'  + ${category.id}}" class="fas fa-trash fa-2x icon-silver">
-                            </a>
+
+                            <div th:replace="fragements :: category_actions"></div>
+<!--                            -->
+<!--                            <a th:href="@{'/categories/edit/' + ${category.id}}" class="fa fa-edit fa-2x icon-green" -->
+<!--                                title="Edit This Categories">-->
+<!--                            </a>-->
+<!--                            &nbsp;&nbsp;-->
+<!--                            <a th:if="${!category.hasChildren}" th:href="@{'/categories/delete/'  + ${category.id}}" class="fas fa-trash fa-2x icon-silver">-->
+<!--                            </a>-->
                         </td>
                     </tr>
                 </div>
@@ -83,11 +97,28 @@
             </table>
         </div>
 
+        <div th:replace="modal-fragments::confirm_modal"></div>
+
     </div>
 </section>
 
 
 <div th:replace=" fragements :: footer">
 </div>
+
+<script th:src="@{/js/common_list.js}">
+
+</script>
+
+<script type="text/javascript">
+    moduleURL = "[[@{/categories}]]";
+    $(document).ready(function () {
+        $(".link-delete").on("click", function (e) {
+            e.preventDefault();
+            showDeleteConfirmModal($(this), 'category');
+        });
+    });
+</script>
+
 </body>
 </html>

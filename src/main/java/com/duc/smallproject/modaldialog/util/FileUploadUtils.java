@@ -47,6 +47,15 @@ public class FileUploadUtils {
         }
     }
 
+    public static void remove(String cateDir) {
+        clearDir(cateDir);
+        try {
+            Files.delete(Path.of(cateDir));
+        } catch (IOException e) {
+            LOGGER.error("Could not remove directory: " + cateDir);
+        }
+    }
+
     public void init() {
 
     }

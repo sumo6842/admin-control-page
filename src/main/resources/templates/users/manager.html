@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <head th:replace="fragements :: page_head('Home - Shopme Page')"/>
+>
+<head th:replace="fragements :: page_head('Home - Shopme Page')"/>
 <body>
 
 <div th:replace="navigation :: menu"></div>
@@ -43,16 +43,19 @@
                 <thead class="table-dark">
                 <tr>
                     <th class="hideable-column">
-                    <th th:replace="fragements :: column_link('id','userId', 'tag')"/>
-                    </th>
+                    <th th:replace="fragements :: column_link('id','userId', 'tag')"><
+                    /th>
+
                     <th>Photos</th>
+
                     <th class="hideable-column">
-                    <th th:replace="fragements :: column_link('email','E-Mail', 'tag')"/>
+                    <th th:replace="fragements :: column_link('email','E-Mail', 'tag')">
                     </th>
-                    <th th:replace="fragements :: column_link('firstName','First Name', 'none')"/>
-                    <th th:replace="fragements :: column_link('lastName','Last Name', 'none')"/>
+
+                    <th th:replace="fragements :: column_link('firstName','First Name', 'none')"></th>
+                    <th th:replace="fragements :: column_link('lastName','Last Name', 'none')"></th>
                     <th>Roles</th>
-                    <th th:replace="fragements :: column_link('enabled','Enabled', 'none')"/>
+                    <th th:replace="fragements :: column_link('enabled','Enabled', 'none')"></th>
                     <th>Edit &nbsp; Delete</th>
                 </tr>
                 </thead>
@@ -158,6 +161,7 @@
         </nav>
     </div>
 </section>
+<div th:replace="modal-fragments :: confirm_modal"></div>
 
 <div th:replace="navigation :: footer"></div>
 

@@ -6,17 +6,14 @@ import com.duc.smallproject.modaldialog.util.CategoryNotFondException;
 import com.duc.smallproject.modaldialog.util.FileUploadUtils;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
 import java.util.Objects;
 
 @Controller
@@ -30,9 +27,15 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    public String categoryManager(Model model) {
+    public String categoryManager(@Param("sortDir") String sortDir, Model model) {
 //        return categoryList(1, "id", "asc", "", model);
-        model.addAttribute("categories", categoryService.listAll());
+        if (sortDir == null || sortDir.isEmpty()) {
+            sortDir = "asc";
+        }
+        String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+        model.addAttribute("reverse", reverseSortDir);
+        model.addAttribute("categories",
+                categoryService.listAll(sortDir));
         return "categories/categories";
     }
 
@@ -79,20 +82,43 @@ public class CategoryController {
     @GetMapping("/categories/edit/{id}")
     String getFormUpdate(@PathVariable(name = "id") Integer id,
                          Model model, RedirectAttributes redirectAttributes) {
-       try {
-           var cate = categoryService.findCate(id);
-           var listCate = categoryService.listCategoriesUserInform();
-           model.addAttribute("category", cate);
-           model.addAttribute("categories", listCate);
-           model.addAttribute("pageTitle", "Edit Category(" + id + ")");
-           redirectAttributes.addFlashAttribute("message", "Edit Category(ID:" + id + ")");
+        try {
+            var cate = categoryService.findCate(id);
+            var listCate = categoryService.listCategoriesUserInform();
+            model.addAttribute("category", cate);
+            model.addAttribute("categories", listCate);
+            model.addAttribute("pageTitle", "Edit Category(" + id + ")");
+            redirectAttributes.addFlashAttribute("message", "Edit Category(ID:" + id + ")");
 
-           return "/categories/category_form";
-       } catch (CategoryNotFondException e) {
-           redirectAttributes.addFlashAttribute("message", e.getMessage());
-           return "redirect:/categories";
-       }
+            return "/categories/category_form";
+        } catch (CategoryNotFondException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/categories";
+        }
     }
 
-
+    @GetMapping("/categories/{id}/enabled")
+    String updateEnabled(@PathVariable("id") @NonNull Integer id, RedirectAttributes attributes) {
+        try {
+            var cate = categoryService.findCate(id);
+            categoryService.enabledCate(id);
+            attributes.addFlashAttribute("message","success to update: " + id);
+        } catch (CategoryNotFondException e) {
+            attributes.addFlashAttribute("message", "No category with " + id + "is found");
+        }
+        return "redirect:/categories";
+    }
+    @GetMapping("/categories/delete/{id}")
+    public String deleteCategories(@PathVariable(name = "id") Integer id,
+                                   RedirectAttributes attributes) {
+        try {
+            categoryService.delete(id);
+            String cateDir = "category-images/" + id;
+            FileUploadUtils.remove(cateDir);
+            attributes.addFlashAttribute("message", "The Categories Id: " + id + " has been deleted success");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/categories";
+    }
 }

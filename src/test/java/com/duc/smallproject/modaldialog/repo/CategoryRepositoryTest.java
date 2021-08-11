@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
@@ -113,17 +114,16 @@ class CategoryRepositoryTest {
         System.out.println(pageSize);
     }
 
-
     @Test
     public void testListRootCategories() {
-        List<Categories> rootCategories = repo.findRootCategories();
+        List<Categories> rootCategories = repo.findRootCategories(Sort.by("name").ascending());
         rootCategories.forEach(System.out::println);
     }
 
     @Test
     void getAllCategories() {
-        repo.findRootCategories().forEach(System.out::println);
-        repo.findRootCategories().stream()
+        repo.findRootCategories(Sort.by("name").descending()).forEach(System.out::println);
+        repo.findRootCategories(Sort.by("name").descending()).stream()
                 .map(Categories::getChildren)
                 .forEach(System.out::println);
     }
@@ -137,5 +137,19 @@ class CategoryRepositoryTest {
         for (Categories category : children) {
             System.out.println(category);
         }
+    }
+
+    @Test
+    void testFindByName() {
+        String name = "Computer";
+        var computer = repo.findByName(name);
+        assertThat(computer).isNotNull();
+        System.out.println("This is test: ");
+    }
+
+    @Test
+    void testFindByNameFail() {
+        var chair = repo.findByName("Chair");
+        assertThat(chair).isNull();
     }
 }

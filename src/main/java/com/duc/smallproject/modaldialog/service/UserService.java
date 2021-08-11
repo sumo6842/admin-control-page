@@ -102,7 +102,7 @@ public class UserService {
 
     public User get(Long id) throws UserNotFoundException {
         try {
-            return repo.findById(id).get();
+            return repo.findById(id).orElseThrow(NoSuchElementException::new);
 
         } catch (NoSuchElementException ex) {
             throw new UserNotFoundException("Could not find any user with Id: " + id);

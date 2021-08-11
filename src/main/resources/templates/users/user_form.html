@@ -131,6 +131,7 @@
             } else if (response === "Duplicated") {
                 showModalDialog("Warning", "There is another user having the email " + userEmail);
             } else {
+                // alert(response);
                 showModalDialog("Error", "Unknown response from server");
             }
         }).fail(function () {

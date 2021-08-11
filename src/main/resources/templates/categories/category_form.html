@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragements :: page_head('Manager Category')"></head>
 <body>
 <div class="container-fluid">
@@ -8,6 +8,7 @@
     <form th:action="@{/categories/save}" method="post"
           style="max-width: 800px; margin: 0 auto;"
           enctype="multipart/form-data"
+          onsubmit="return checkUnique(this)"
           th:object="${category}">
         <div class="text-center">
             <h2>[[${pageTitle}]]</h2>
@@ -69,8 +70,36 @@
             </div>
         </div>
     </form>
+
+    <div th:replace="modal-fragments :: modal_dialog" ></div>
+
     <script type="text/javascript">
         moduleURL = "[[@{/categories}]]";
+
+        function checkUnique(form) {
+            let catId = $("#id").val();
+            let catName = $("#name").val();
+            let catAlias = $("#alias").val();
+
+            const csrfValue = $("input[name='_csrf']").val();
+            let url = "[[@{/categories/check_unique}]]";
+            let params = {id: catId, name: catName, alias: catAlias, _csrf: csrfValue}
+            $.post(url, params, function (response) {
+                if (response === "OK") {
+                    form.submit();
+                } else if(response === "Duplicated Name") {
+                    showWarningModal("There is using name: " + catName);
+                } else if(response === "Duplicated Alias") {
+                    showWarningModal("There is anther using alias: " + catAlias)
+                } else {
+                    showErrorModal("Unknowing response from server");
+                }
+            }).fail(function () {
+                showModalDialog("", response)
+            });
+            return false;
+        }
+
     </script>
     <script th:src="@{/js/common_form.js}"></script>
 </div>
